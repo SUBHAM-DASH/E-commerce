@@ -1,0 +1,61 @@
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 20px;
+  width: 100%;
+}
+
+.title-container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.input-box-container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.input-box-container mat-icon {
+  position: relative;
+  color: #000000;
+  left: 30px;
+  font-size: 25px;
+}
+
+.input-box-container input {
+  width: 350px;
+  height: 27px;
+  padding: 0px 40px;
+  border: 0;
+  outline: none;
+  border-radius: 2px;
+}
+.input-box-container input::placeholder{
+  font-size: 16px;
+}
+
+.search-title {
+  font-size: 13px;
+}
+
+.navbar ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-size: 17px;
+  position: relative;
+  top: 10px;
+}
+.navbar ul li {
+  list-style: none;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+}
+.navbar ul li:hover {
+  color: #272424;
+  font-weight: 700;
+}

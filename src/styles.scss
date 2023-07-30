@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+
+
+*{
+  font-family: 'Lato', sans-serif;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.custom-toast {
+  background-color: #0d7bf1;
+  color: rgb(65, 62, 62);
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+}

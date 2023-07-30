@@ -1,0 +1,57 @@
+<div class="container row">
+  <div class="img-container col-md-8">
+    <img
+      src="../../../assets/images/undraw_login.svg"
+      height="90%"
+      width="90%"
+      alt="Not Found"
+    />
+  </div>
+  <div class="login-container col-md-4">
+    <div class="card card-img py-3 px-3" style="width: 25rem">
+      <img
+        src="../../../assets/images/login.png"
+        height="18%"
+        width="18%"
+        alt="Image Not Found"
+      />
+      <form [formGroup]="loginForm">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            id="email"
+            placeholder="Example@.com"
+          />
+          <div
+            class="my-1"
+            *ngIf="loginForm.invalid && (loginForm.dirty || loginForm.touched)"
+            class="text-danger"
+          >
+            Email is required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            id="password"
+            placeholder="****"
+          />
+          <div
+            class="my-1"
+            *ngIf="loginForm.invalid && (loginForm.dirty || loginForm.touched)"
+            class="text-danger"
+          >
+            Password is required.
+          </div>
+        </div>
+      </form>
+      <button (click)="onClickLogin()" class="btn btn-primary">submit</button>
+    </div>
+  </div>
+</div>

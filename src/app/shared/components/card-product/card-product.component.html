@@ -1,0 +1,17 @@
+<div class="card" style="width: 18rem">
+  <img
+    src="https://rukminim2.flixcart.com/image/832/832/l4zxn680/jean/z/u/0/32-36087-0629-levi-s-original-imagfrryhe98cjpf.jpeg?q=70"
+    height="250"
+    class="card-img-top"
+    alt="..."
+  />
+  <i class="fas fa-heart btn-like text-danger" [ngClass]="{'text-danger': isLiked, 'text-light': !isLiked}" (click)="handleHeartClick()"></i>
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">
+      Some quick example text to build on the card title and make up the bulk of
+      the card's content.
+    </p>
+    <button class="btn btn-primary btn-sm">Buy Now</button>
+  </div>
+</div>

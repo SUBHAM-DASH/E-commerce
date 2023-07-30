@@ -1,0 +1,17 @@
+<form [formGroup]="myForm" (ngSubmit)="submit()" class="my-2">
+  <div class="form-group mx-1">
+      <label for="file" class="select-image">Upload Multipple Product Images</label>
+      <input
+          formControlName="file"
+          id="file"
+          type="file"
+          class="form-control"
+          multiple=""
+          (change)="onFileChange($event)">
+      <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+          <div *ngIf="f?.file?.invalid">File is required.</div>
+      </div>
+  </div>
+  <img *ngFor='let url of images'  [src]="url" height="200px" width="175px" style="margin: 3px;"> <br/>
+  <button class="btn btn-primary btn-sm m-2" type="submit">Select File</button>
+</form>

@@ -1,0 +1,97 @@
+<div class="container my-4">
+  <mat-card>
+    <app-multiple-image-upload></app-multiple-image-upload>
+    <div class="product-container mx-2">
+      <form [formGroup]="productForm" (ngSubmit)="addProductSubmit()">
+        <div class="row">
+          <p class="text-danger text-end titlecase" *ngIf="formSubmitted && productForm.get('productName')?.invalid">Product Name Field Should Not Empty.</p>
+          <p class="text-danger text-end titlecase" *ngIf="formSubmitted && productForm.get('productTitle')?.invalid">Product Title Field Should Not Empty.</p>
+          <p class="text-danger text-end titlecase" *ngIf="formSubmitted && productForm.get('productPrice')?.invalid">Price Field Should Not Empty.</p>
+          <p class="text-danger text-end titlecase" *ngIf="formSubmitted && productForm.get('productDesc')?.invalid">Product Description Field Should Not Empty.</p>
+
+          <div class="col-md-4">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">
+                <mat-icon>shopping_cart</mat-icon>
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Product Name"
+                aria-label="Product Name"
+                aria-describedby="basic-addon1"
+                formControlName="productName"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">
+                <mat-icon>category</mat-icon>
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Product Title"
+                aria-label="Product Title"
+                aria-describedby="basic-addon1"
+                formControlName="productTitle"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">
+                <mat-icon>attach_money</mat-icon>
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Price"
+                aria-label="Price"
+                aria-describedby="basic-addon1"
+                formControlName="productPrice"
+              />
+            </div>
+          </div>
+
+          <mat-form-field class="col-md-6">
+            <mat-label>Select Size</mat-label>
+            <mat-select [formControl]="size" multiple>
+              <mat-select-trigger>
+                {{size.value?.[0] || ''}}
+                <span
+                  *ngIf="(size.value?.length || 0) > 1"
+                  class="example-additional-selection"
+                >
+                  (+{{ (size.value?.length || 0) - 1 }}
+                  {{ size.value?.length === 2 ? "other" : "others" }})
+                </span>
+              </mat-select-trigger>
+              <mat-option *ngFor="let s of sizeList" [value]="s">{{
+                s
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="form-floating col-md-6">
+            <textarea
+              class="form-control"
+              placeholder="Product Description"
+              formControlName="productDesc"
+            ></textarea>
+            <label for="floatingTextarea" class="mx-2"
+              >Product Description</label
+            >
+          </div>
+
+        </div>
+        <div class="text-center my-3">
+          <button type="submit" class="btn btn-primary px-5 btn-sm">Sale</button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,23 @@
+.child-container{
+  height: 200px;
+}
+.image img{
+  height: 200px;
+  object-fit: cover;
+}
+.btn-container{
+  display: flex;
+  justify-content: space-evenly;
+}
+.btn-sm{
+  height: 30px;
+}
+.count{
+  font-size: 16px;
+}
+.custom-mini-fab {
+  width: 25px;
+  height: 25px;
+  font-size: 5px;
+  line-height: 25px;
+}

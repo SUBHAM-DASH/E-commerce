@@ -1,0 +1,56 @@
+<mat-toolbar color="primary">
+  <div class="main-container">
+    <div class="title-container">
+      <span>E-comm</span>
+      <img style="margin-left: 20px;" src="../../assets/images/online-shopping.png" height="60" width="60" alt="image not found">
+    </div>
+    <div class="input-box-container">
+      <mat-icon>search</mat-icon>
+      <input
+        type="text"
+        placeholder="Search Products..."
+        [formControl]="control"
+        [matAutocomplete]="auto"
+        class="example-input"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let street of filteredStreets | async"
+          [value]="street"
+          class="title-option"
+        >
+          <span class="search-title">{{ street }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+    <div class="navbar">
+      <ul>
+        <li routerLink="/">Home</li>
+        <li routerLink="/pages/add-newproduct">Add Product</li>
+        <li routerLink="/auth">Login</li>
+        <li routerLink="/pages/cart">Cart(10)</li>
+        <li>
+          <mat-icon class="mt-2" [matMenuTriggerFor]="menu" matBadge="4" matBadgeSize="small" matBadgeColor="accent" matBadgeOverlap="true">account_circle</mat-icon>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>person</mat-icon>
+              <span>My Account</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>monetization_on</mat-icon>
+              <span>My Sales</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>shopping_cart</mat-icon>
+              <span>My Purchases</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </li>
+      </ul>
+    </div>
+  </div>
+</mat-toolbar>
