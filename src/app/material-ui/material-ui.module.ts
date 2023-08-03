@@ -8,6 +8,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const materialUiModules: any[] = [
   MatToolbarModule,
@@ -18,6 +20,8 @@ const materialUiModules: any[] = [
   MatSelectModule,
   MatMenuModule,
   MatBadgeModule,
+  MatTableModule,
+  MatProgressSpinnerModule,
 ];
 
 @NgModule({

@@ -12,19 +12,21 @@ import { Observable } from 'rxjs';
 })
 export class InterceptorService implements HttpInterceptor {
   constructor() {}
+
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (!localStorage.getItem('e-commerce-token')) {
+    const token = localStorage.getItem('e-commerce-token');
+
+    if (!token) {
       return next.handle(req);
-    } else {
-      const modifiedRequest = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${localStorage.getItem('e-commerce-token')}`,
-        },
-      });
-      return next.handle(modifiedRequest);
     }
+    let modifiedRequest = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return next.handle(modifiedRequest);
   }
 }

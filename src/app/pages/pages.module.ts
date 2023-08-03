@@ -8,9 +8,11 @@ import { SharedModule } from '../shared/shared.module';
 import { CartCardComponent } from './cart-card/cart-card.component';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MySalesComponent } from './my-sales/my-sales.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
-  declarations: [HomePageComponent, CartCardComponent, AddNewProductComponent],
+  declarations: [HomePageComponent, CartCardComponent, AddNewProductComponent, MySalesComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
@@ -18,6 +20,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MaterialUiModule,
     ReactiveFormsModule,
     FormsModule,
+    InfiniteScrollModule
   ],
 })
 export class PagesModule {}

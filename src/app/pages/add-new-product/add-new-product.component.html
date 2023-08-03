@@ -1,6 +1,6 @@
 <div class="container my-4">
   <mat-card>
-    <app-multiple-image-upload></app-multiple-image-upload>
+    <app-multiple-image-upload (files)="getProductImages($event)"></app-multiple-image-upload>
     <div class="product-container mx-2">
       <form [formGroup]="productForm" (ngSubmit)="addProductSubmit()">
         <div class="row">
@@ -57,7 +57,7 @@
             </div>
           </div>
 
-          <mat-form-field class="col-md-6">
+          <mat-form-field class="col-md-4">
             <mat-label>Select Size</mat-label>
             <mat-select [formControl]="size" multiple>
               <mat-select-trigger>
@@ -76,7 +76,26 @@
             </mat-select>
           </mat-form-field>
 
-          <div class="form-floating col-md-6">
+          <mat-form-field class="col-md-4">
+            <mat-label>Select Color</mat-label>
+            <mat-select [formControl]="color" multiple>
+              <mat-select-trigger>
+                {{color.value?.[0] || ''}}
+                <span
+                  *ngIf="(color.value?.length || 0) > 1"
+                  class="example-additional-selection"
+                >
+                  (+{{ (color.value?.length || 0) - 1 }}
+                  {{ color.value?.length === 2 ? "other" : "others" }})
+                </span>
+              </mat-select-trigger>
+              <mat-option *ngFor="let c of colorList" [value]="c">{{
+                c
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="form-floating col-md-4">
             <textarea
               class="form-control"
               placeholder="Product Description"

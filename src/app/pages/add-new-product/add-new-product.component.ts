@@ -5,7 +5,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngxs/store';
 import { ToastrService } from 'ngx-toastr';
+import { AddSellerProduct } from 'src/app/stores/action/product.action';
+
+interface Files {
+  name: string;
+  file: string;
+  fileSource: string[];
+}
 
 @Component({
   selector: 'app-add-new-product',
@@ -17,6 +25,9 @@ export class AddNewProductComponent implements OnInit {
   formSubmitted: boolean = false;
 
   size: any = new FormControl('', [Validators.required]);
+  color: any = new FormControl('', [Validators.required]);
+
+  imageFiles: File[] = [];
 
   sizeList: string[] = [
     'Extra Small',
@@ -26,7 +37,21 @@ export class AddNewProductComponent implements OnInit {
     'Extra Large',
     '2 Extra Large',
   ];
-  constructor(private fb: FormBuilder, private toster: ToastrService) {}
+
+  colorList: string[] = [
+    'blue',
+    'white',
+    'black',
+    'navy blue',
+    'gray',
+    'purple',
+  ];
+
+  constructor(
+    private fb: FormBuilder,
+    private toster: ToastrService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
@@ -37,12 +62,30 @@ export class AddNewProductComponent implements OnInit {
     });
   }
 
+  public getProductImages(file: File): void {
+    this.imageFiles.push(file);
+  }
+
   public addProductSubmit() {
     if (this.productForm.invalid) {
       this.formSubmitted = true;
       this.toster.error('Sorry. Product Filed Is Invalid.');
       return;
+    } else if (this.imageFiles?.length == 0) {
+      this.formSubmitted = true;
+      this.toster.error('Sorry. Product Images Are Empty.');
+      return;
     }
 
+    const fd = new FormData();
+    for (let i = 0; i < this.imageFiles.length; i++) {
+      fd.append('image', this.imageFiles[i]);
+    }
+    for (const key in this.productForm.value) {
+      fd.append(key, this.productForm.value[key]);
+    }
+    fd.append('productSize', JSON.stringify(this.size.value));
+    fd.append('productColor', JSON.stringify(this.color.value));
+    this.store.dispatch(new AddSellerProduct(fd));
   }
 }

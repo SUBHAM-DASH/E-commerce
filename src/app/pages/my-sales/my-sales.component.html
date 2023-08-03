@@ -1,0 +1,41 @@
+<div
+  class="container my-5"
+  infinite-scroll
+  [infiniteScrollDistance]="scrollDistance"
+  [infiniteScrollUpDistance]="upScrollDistance"
+  (scrolled)="loadMoreData()"
+>
+  <mat-card>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      multiTemplateDataRows
+      class="mat-elevation-z8"
+    >
+      <ng-container
+        matColumnDef="{{ column }}"
+        *ngFor="let column of columnsToDisplay"
+      >
+        <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="column !== 'action'">
+            {{ element[column] }}
+          </ng-container>
+          <ng-container *ngIf="column === 'action'">
+            <mat-icon color="primary" class="mx-2 icon">edit</mat-icon>
+            <mat-icon color="warn" class="mx-2 icon">delete</mat-icon>
+          </ng-container>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: columnsToDisplay"
+        class="example-detail-row"
+      ></tr>
+    </table>
+    <div class="spinner" *ngIf="!visible">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  </mat-card>
+</div>

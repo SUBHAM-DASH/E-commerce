@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-multiple-image-upload',
@@ -7,23 +8,21 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./multiple-image-upload.component.scss'],
 })
 export class MultipleImageUploadComponent implements OnInit {
-
   @Output() files = new EventEmitter<any>();
 
   images: any = [];
+  totalFiles: File[] = [];
+
   myForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     file: new FormControl('', [Validators.required]),
     fileSource: new FormControl('', [Validators.required]),
+    files: new FormControl<any>([], Validators.required),
   });
 
-  constructor() {}
+  constructor(private toster:ToastrService) {}
 
   ngOnInit(): void {}
-
-  submit() {
-    console.log(this.myForm.value);
-  }
 
   get f() {
     return this.myForm.controls;
@@ -31,16 +30,21 @@ export class MultipleImageUploadComponent implements OnInit {
 
   onFileChange(event: any) {
     if (event.target.files && event.target.files[0]) {
-      var filesAmount = event.target.files.length;
+      const filesAmount = event.target.files.length;
       for (let i = 0; i < filesAmount; i++) {
-        var reader = new FileReader();
-        reader.onload = (event: any) => {
-          this.images.push(event?.target.result);
-          this.myForm.patchValue({
-            fileSource: this.images,
-          });
-        };
-        reader.readAsDataURL(event.target.files[i]);
+        if (this.images.length > 5) {
+          this.toster.error("Sorry..You Can't Add More Then Six Images.");
+          return;
+        } else {
+          const reader = new FileReader();
+          reader.onload = (event: any) => {
+            this.images.push(event?.target.result);
+            this.myForm.patchValue({
+              fileSource: this.images,
+            });
+          };
+          reader.readAsDataURL(event.target.files[i]);
+        }
       }
     }
   }

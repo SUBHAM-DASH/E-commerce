@@ -1,0 +1,18 @@
+table {
+  width: 100%;
+}
+.icon{
+  cursor: pointer;
+}
+.search-results {
+  height: 20rem;
+  overflow: scroll;
+}
+.spinner{
+  display: flex;
+  justify-content: center;
+}
+::ng-deep .mat-spinner {
+  width: 20px; /* Set your desired width */
+  height: 20px; /* Set your desired height */
+}

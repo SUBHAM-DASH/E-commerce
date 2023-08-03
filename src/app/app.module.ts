@@ -18,6 +18,7 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { UserState } from './stores/state/user.state';
 import { InterceptorService } from './interceptor.service';
+import { ProductState } from './stores/state/product.state';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -34,7 +35,7 @@ import { InterceptorService } from './interceptor.service';
     AuthModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    NgxsModule.forRoot([UserState]),
+    NgxsModule.forRoot([UserState,ProductState]),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
   ],

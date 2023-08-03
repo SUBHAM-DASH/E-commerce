@@ -11,3 +11,12 @@ export interface UserModel {
   address: string[];
   created_at: string;
 }
+
+export interface AddProduct {
+  imageFiles: File[];
+  productName: string;
+  productTitle: string;
+  productPrice: string;
+  productDesc: string;
+  productSize: string[];
+}
