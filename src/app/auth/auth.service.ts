@@ -9,7 +9,6 @@ export class AuthService {
   constructor(private _http: HttpClient) {}
 
   public loginEcommerceUser(data: Login) {
-    console.log(data)
     return this._http.post<Login>(`${environment.serverUrl}/user/userlogin`, data).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError('An error occurred during login. Please try again later.');

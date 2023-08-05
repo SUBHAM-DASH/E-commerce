@@ -1,13 +1,36 @@
 <div class="container my-4">
   <mat-card>
-    <app-multiple-image-upload (files)="getProductImages($event)"></app-multiple-image-upload>
+    <app-multiple-image-upload
+      (files)="getProductImages($event)"
+      [editImages]="editImages"
+    ></app-multiple-image-upload>
     <div class="product-container mx-2">
       <form [formGroup]="productForm" (ngSubmit)="addProductSubmit()">
         <div class="row">
-          <p class="text-danger text-end titlecase" *ngIf="formSubmitted && productForm.get('productName')?.invalid">Product Name Field Should Not Empty.</p>
-          <p class="text-danger text-end titlecase" *ngIf="formSubmitted && productForm.get('productTitle')?.invalid">Product Title Field Should Not Empty.</p>
-          <p class="text-danger text-end titlecase" *ngIf="formSubmitted && productForm.get('productPrice')?.invalid">Price Field Should Not Empty.</p>
-          <p class="text-danger text-end titlecase" *ngIf="formSubmitted && productForm.get('productDesc')?.invalid">Product Description Field Should Not Empty.</p>
+          <p
+            class="text-danger text-end titlecase"
+            *ngIf="formSubmitted && productForm.get('productName')?.invalid"
+          >
+            Product Name Field Should Not Empty.
+          </p>
+          <p
+            class="text-danger text-end titlecase"
+            *ngIf="formSubmitted && productForm.get('productTitle')?.invalid"
+          >
+            Product Title Field Should Not Empty.
+          </p>
+          <p
+            class="text-danger text-end titlecase"
+            *ngIf="formSubmitted && productForm.get('productPrice')?.invalid"
+          >
+            Price Field Should Not Empty.
+          </p>
+          <p
+            class="text-danger text-end titlecase"
+            *ngIf="formSubmitted && productForm.get('productDesc')?.invalid"
+          >
+            Product Description Field Should Not Empty.
+          </p>
 
           <div class="col-md-4">
             <div class="input-group mb-3">
@@ -105,10 +128,11 @@
               >Product Description</label
             >
           </div>
-
         </div>
-        <div class="text-center my-3">
-          <button type="submit" class="btn btn-primary px-5 btn-sm">Sale</button>
+        <div class="text-center my-4">
+          <button type="submit" class="btn btn-primary px-5 btn-sm">
+            {{ isProductEdit ? "Save" : "Sale" }}
+          </button>
         </div>
       </form>
     </div>

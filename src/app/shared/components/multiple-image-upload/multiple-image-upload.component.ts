@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'environment';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -8,7 +9,11 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./multiple-image-upload.component.scss'],
 })
 export class MultipleImageUploadComponent implements OnInit {
+
+  serverUrl:string = environment.url;
+
   @Output() files = new EventEmitter<any>();
+  @Input() editImages:any = [];
 
   images: any = [];
   totalFiles: File[] = [];
@@ -20,9 +25,11 @@ export class MultipleImageUploadComponent implements OnInit {
     files: new FormControl<any>([], Validators.required),
   });
 
-  constructor(private toster:ToastrService) {}
+  constructor(private toster: ToastrService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
 
   get f() {
     return this.myForm.controls;
@@ -36,6 +43,7 @@ export class MultipleImageUploadComponent implements OnInit {
           this.toster.error("Sorry..You Can't Add More Then Six Images.");
           return;
         } else {
+          this.files.emit(event.target.files[0]);
           const reader = new FileReader();
           reader.onload = (event: any) => {
             this.images.push(event?.target.result);

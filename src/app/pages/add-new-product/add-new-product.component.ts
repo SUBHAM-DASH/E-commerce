@@ -1,13 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { MultipleImageUploadComponent } from './../../shared/components/multiple-image-upload/multiple-image-upload.component';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Store } from '@ngxs/store';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Select, Store } from '@ngxs/store';
+import { environment } from 'environment';
 import { ToastrService } from 'ngx-toastr';
-import { AddSellerProduct } from 'src/app/stores/action/product.action';
+import { Observable, Subscription, filter } from 'rxjs';
+import {
+  AddSellerProduct,
+  EditSellerProduct,
+} from 'src/app/stores/action/product.action';
+import { ProductState } from 'src/app/stores/state/product.state';
 
 interface Files {
   name: string;
@@ -20,7 +34,18 @@ interface Files {
   templateUrl: './add-new-product.component.html',
   styleUrls: ['./add-new-product.component.scss'],
 })
-export class AddNewProductComponent implements OnInit {
+export class AddNewProductComponent implements OnInit, OnDestroy {
+  @ViewChild(MultipleImageUploadComponent)
+  childComp!: MultipleImageUploadComponent;
+
+  serverUrl: string = environment.serverUrl;
+  isProductEdit: boolean = false;
+  editData!: any;
+
+  @Select(ProductState.afterAddProductResp)
+  responseMessage$!: Observable<boolean>;
+  responseDataSubscription!: Subscription;
+
   productForm!: FormGroup;
   formSubmitted: boolean = false;
 
@@ -28,6 +53,7 @@ export class AddNewProductComponent implements OnInit {
   color: any = new FormControl('', [Validators.required]);
 
   imageFiles: File[] = [];
+  editImages: string[] = [];
 
   sizeList: string[] = [
     'Extra Small',
@@ -50,15 +76,41 @@ export class AddNewProductComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private toster: ToastrService,
-    private store: Store
+    private store: Store,
+    private router: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.responseDataSubscription = this.responseMessage$.subscribe(
+      (response: any) => {
+        if (response) {
+          this.toster.success(response);
+        }
+      }
+    );
+
     this.productForm = this.fb.group({
       productName: ['', Validators.required],
       productTitle: ['', Validators.required],
       productPrice: ['', Validators.required],
       productDesc: ['', Validators.required],
+    });
+
+    //Product Edit
+    this.router?.queryParams?.subscribe((params: any) => {
+      if (params && params._id) {
+        this.isProductEdit = true;
+        this.editData = params;
+        this.productForm.patchValue({
+          productName: params?.productname,
+          productTitle: params?.producttitle,
+          productPrice: params?.price,
+          productDesc: params?.description,
+        });
+        this.size.setValue(params?.size);
+        this.color.setValue(params?.color);
+        this.editImages = params?.images;
+      }
     });
   }
 
@@ -71,7 +123,7 @@ export class AddNewProductComponent implements OnInit {
       this.formSubmitted = true;
       this.toster.error('Sorry. Product Filed Is Invalid.');
       return;
-    } else if (this.imageFiles?.length == 0) {
+    } else if (this.imageFiles?.length == 0 && this.editImages?.length == 0) {
       this.formSubmitted = true;
       this.toster.error('Sorry. Product Images Are Empty.');
       return;
@@ -86,6 +138,23 @@ export class AddNewProductComponent implements OnInit {
     }
     fd.append('productSize', JSON.stringify(this.size.value));
     fd.append('productColor', JSON.stringify(this.color.value));
-    this.store.dispatch(new AddSellerProduct(fd));
+
+    if (!this.isProductEdit) {
+      this.store.dispatch(new AddSellerProduct(fd));
+      this.productForm.reset();
+      this.size.setValue('');
+      this.color.setValue('');
+      this.childComp.images = [];
+      this.childComp.totalFiles = [];
+      this.childComp.myForm.reset();
+    } else {
+      fd.append('_id', this.editData._id);
+      fd.append('imagesfiles',JSON.stringify(this.editImages));
+      this.store.dispatch(new EditSellerProduct(fd));
+    }
+  }
+
+  ngOnDestroy() {
+    this.responseDataSubscription.unsubscribe();
   }
 }

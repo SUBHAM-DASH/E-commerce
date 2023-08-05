@@ -1,6 +1,6 @@
 const createAddProductTableQuery = `
   CREATE TABLE products (
-    _id INT AUTO_INCREMENT PRIMARY KEY,
+    _id VARCHAR(50) PRIMARY KEY,
     images JSON,
     producttitle VARCHAR(255),
     productname VARCHAR(255),
@@ -32,8 +32,30 @@ const insertIntoProductTableQuery = `
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 `;
 
+const makingPaginationQuery = `
+  SELECT * FROM products ORDER BY date LIMIT ? OFFSET ?;
+`;
+
+const isExistProductQuery = `SELECT * FROM products WHERE _id = ? AND sellerId = ?`;
+
+const updateProductQuery = `
+  UPDATE products
+  SET productname = ?,
+  producttitle = ?,
+  description = ?,
+  price = ?,
+  size = ?,
+  color = ?,
+  likes = ?,
+  images = ?
+  WHERE _id = ? AND sellerId = ?
+`;
+
 module.exports = {
   createAddProductTableQuery,
   isExistProductTableQuery,
   insertIntoProductTableQuery,
+  makingPaginationQuery,
+  isExistProductQuery,
+  updateProductQuery
 };

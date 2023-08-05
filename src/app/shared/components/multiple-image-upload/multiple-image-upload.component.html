@@ -1,16 +1,37 @@
 <form [formGroup]="myForm" class="my-2">
   <div class="form-group mx-1">
-      <label for="file" class="select-image">Upload Multiple Product Images</label>
-      <input
-          formControlName="file"
-          id="file"
-          type="file"
-          class="form-control"
-          multiple=""
-          (change)="onFileChange($event)">
-      <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
-          <div *ngIf="f?.file?.invalid">File is required.</div>
-      </div>
+    <label for="file" class="select-image"
+      >Upload Multiple Product Images</label
+    >
+    <input
+      formControlName="file"
+      id="file"
+      type="file"
+      class="form-control"
+      multiple=""
+      (change)="onFileChange($event)"
+    />
+    <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+      <div *ngIf="f?.file?.invalid">File is required.</div>
+    </div>
   </div>
-  <img *ngFor='let url of images'  [src]="url" height="200px" width="175px" style="margin: 3px;"> <br/>
+  <div *ngIf="images.length > 0">
+    <img
+      *ngFor="let url of images"
+      [src]="url"
+      height="200px"
+      width="175px"
+      style="margin: 3px"
+    />
+  </div>
+  <div *ngIf="editImages && editImages.length > 0">
+    <img
+      *ngFor="let url of editImages"
+      [src]="serverUrl + '/' + url"
+      height="200px"
+      width="175px"
+      style="margin: 3px"
+    />
+  </div>
+  <br />
 </form>

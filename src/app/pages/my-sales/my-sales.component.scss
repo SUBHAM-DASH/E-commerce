@@ -1,6 +1,7 @@
 table {
   width: 100%;
 }
+
 .icon{
   cursor: pointer;
 }
@@ -16,3 +17,23 @@ table {
   width: 20px; /* Set your desired width */
   height: 20px; /* Set your desired height */
 }
+
+.badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; /* Set the desired width */
+  height: 20px; /* Set the desired height */
+  border-radius: 50%;
+}
+
+/* To create a border around the badge */
+.badge-icon-content {
+  font-size: 0; /* Set the font size to 0 to hide the space within the badge */
+  color: transparent; /* Set the text color to transparent */
+  border: 2px solid #ffffff; /* Set the desired border color */
+  border-radius: 50%;
+}
+
+
+

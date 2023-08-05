@@ -10,6 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const materialUiModules: any[] = [
   MatToolbarModule,
@@ -22,6 +23,7 @@ const materialUiModules: any[] = [
   MatBadgeModule,
   MatTableModule,
   MatProgressSpinnerModule,
+  MatTooltipModule,
 ];
 
 @NgModule({

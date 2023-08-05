@@ -6,6 +6,9 @@ const bodyParser = require("body-parser");
 const port = 5000;
 
 
+app.use(express.static("./uploads/product_images"));
+
+
 //middleware
 app.use(cors());
 app.use(express.json());

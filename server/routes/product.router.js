@@ -2,14 +2,17 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const { auth } = require("../middleware/auth");
-const { addSellerProduct } = require("../controllers/product.controller");
+const {
+  addSellerProduct,
+  getSellerProduct,
+  editSellerProduct,
+} = require("../controllers/product.controller");
 const fs = require("fs");
 
 let dir = "./uploads/product_images";
-if(!fs.existsSync(dir)){
+if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir);
 }
-
 
 //Image Upload
 const storage = multer.diskStorage({
@@ -28,5 +31,11 @@ const product_uploads = upload.fields([{ name: "image", maxCount: 6 }]);
 
 //************************ Add Seller Product ******************//
 router.post("/addSellerProduct", auth, product_uploads, addSellerProduct);
+
+//************************ Get Seller Product *******************//
+router.get("/getSellerProduct", auth, upload.none(), getSellerProduct);
+
+//*********************** Edit Seller Product *********************//
+router.put("/editSellerProduct", auth, product_uploads, editSellerProduct);
 
 module.exports = router;

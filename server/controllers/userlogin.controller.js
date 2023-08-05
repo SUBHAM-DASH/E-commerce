@@ -8,6 +8,8 @@ const {
   getUserInformationQuery,
 } = require("../sql/user.query");
 
+
+//User Login
 exports.userlogin = async (req, res) => {
   try {
     const { email, password } = req.body;
